@@ -1,0 +1,119 @@
+# Data Pipeline Configuration
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42
+  stratify_on: "diabetes"
+
+# Feature Engineering Configuration
+features:
+  numerical_features:
+    - age
+    - bmi
+    - blood_pressure
+    - glucose
+    - insulin
+    - skin_thickness
+    - pregnancies
+    - diabetes_pedigree_function
+  categorical_features: []
+  scale_method: "standardscaler"  # standardscaler, minmaxscaler, robustscaler
+  feature_selection:
+    method: "mutual_information"  # mutual_information, rfe, lasso
+    n_features: 8
+
+# Model Configuration
+model:
+  algorithm: "catboost"  # logistic_regression, xgboost, lightgbm, catboost
+  random_state: 42
+  n_jobs: -1
+  cv_folds: 5
+  
+  # Model Hyperparameters
+  hyperparameters:
+    # CatBoost specific
+    iterations: 500
+    learning_rate: 0.05
+    depth: 6
+    l2_leaf_reg: 3
+    random_strength: 1
+    bagging_temperature: 1
+    od_type: "Iter"
+    od_wait: 20
+
+# Hyperparameter Optimization
+optimization:
+  enabled: true
+  method: "optuna"  # optuna, hyperopt, grid
+  n_trials: 100
+  timeout: 3600
+  sampler: "TPE"  # TPE, RandomSampler, GridSampler
+
+# Training Configuration
+training:
+  batch_size: 32
+  epochs: 100
+  early_stopping: true
+  early_stopping_rounds: 10
+  early_stopping_metric: "auc"
+  validation_split: 0.1
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - roc_auc
+    - confusion_matrix
+  cross_validation: true
+  cv_folds: 5
+
+# MLOps Configuration
+mlops:
+  experiment_name: "diabetes-risk-prediction"
+  tracking_uri: "sqlite:///mlruns/mlruns.db"
+  registry_uri: "sqlite:///mlruns/registry.db"
+  log_artifacts: true
+  log_models: true
+  log_params: true
+  log_metrics: true
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+  check_data_drift: true
+  check_model_drift: true
+  drift_threshold: 0.05
+  log_predictions: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_file: "logs/diabetes_model.log"
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 4
+  log_level: "info"
+
+# Docker Configuration
+docker:
+  image_name: "diabetic-model"
+  image_tag: "latest"
+  registry: "docker.io"
+
+# Project Metadata
+project:
+  name: "Diabetic Risk Prediction Model"
+  version: "0.1.0"
+  description: "MLOps project for predicting diabetic risk"
+  author: "Sambit Mohanty"
+  created_date: "2026-02-24"
