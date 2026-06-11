@@ -6,6 +6,7 @@ Thank you for your interest in contributing to the Diabetic Risk Prediction proj
 
 ### Getting Started
 
+
 1. Fork the repository
 2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/mlops-diabetes-project.git`
 3. Create a virtual environment: `python -m venv venv`
